@@ -10,10 +10,10 @@ class ArticleController
     $this->model = new ArticleModel();
   }
 
-  public function jsonResponse(array $arr)
+  public function jsonResponse(array $datas)
   {
     header('content-type:application/json;charset=utf-8');
-    echo json_encode($arr);
+    echo json_encode($datas);
   }
 
   public function all()
@@ -30,8 +30,8 @@ class ArticleController
       header("HTTP/1.1 400 Bad Request");
 
       $this->jsonResponse([
-        'errorCode' => 400,
-        'errorMessage' => 'Les données sont invalides'
+        'code' => 400,
+        'message' => 'Les données sont invalides'
       ]);
     } else {
       $this->model->insert(
