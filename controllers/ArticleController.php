@@ -23,23 +23,18 @@ class ArticleController
 
   public function insert()
   {
-    // if (
-    //   isset($_POST['prix']) &&
-    //   is_numeric($_POST['prix']) &&
-    //   isset($_POST['libelle'])
-    // ) {
-    //   $this->model->insert(
-    //     ['libelle' => $_POST['libelle'], 'prix' => (float) $_POST['prix']]
-    //   );
-    // }
-
     $jsonDatas = file_get_contents('php://input');
-
     $datas = json_decode($jsonDatas, true);
-    if (null === $datas) {
-      echo 'invalide';
+
+    if (null === $datas || !isset($datas['libelle']) || !isset($datas['prix'])) {
+      header("HTTP/1.1 400 Bad Request");
+
+      $this->jsonResponse([
+        'errorCode' => 400,
+        'errorMessage' => 'Les données sont invalides'
+      ]);
     } else {
-      echo $this->model->insert(
+      $this->model->insert(
         ['libelle' => $datas['libelle'], 'prix' => (float) $datas['prix']]
       );
     }
