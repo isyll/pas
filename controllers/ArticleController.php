@@ -24,7 +24,7 @@ class ArticleController
   public function insert()
   {
     $jsonDatas = file_get_contents('php://input');
-    $datas = json_decode($jsonDatas, true);
+    $datas     = json_decode($jsonDatas, true);
 
     if (null === $datas || !isset($datas['libelle']) || !isset($datas['prix'])) {
       header("HTTP/1.1 400 Bad Request");
@@ -35,7 +35,8 @@ class ArticleController
       ]);
     } else {
       $this->model->insert(
-        ['libelle' => $datas['libelle'], 'prix' => (float) $datas['prix']]
+        // ['libelle' => $datas['libelle'], 'prix' => (float) $datas['prix']]
+        $datas
       );
     }
   }
